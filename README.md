@@ -30,12 +30,6 @@ You will first need to download the model files and word embeddings to the model
 	
 Run intent_classification_ros.py
 
-![Alt text](nb.png?raw=true "IntentGrouping.ipynb")
-
-Change the following as per application needs.
-* data      --> List of all utterances (sentences of different intents) from which the nearest neighbor has to be computed.
-* sentence  --> The utterance or sentence for which the most likely intent is to be found by looking up the nearest neighbors in the dataset.
-* neighbors --> Number of nearest neighbors required to compute the semantic similarity of the given sentence. Default is set to 10
 
 ## Logic
 
