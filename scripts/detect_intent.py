@@ -1,10 +1,21 @@
 # import rospy
+import sys
 import numpy as np
 import os.path
 import scipy.spatial.distance as sd
-import skipthoughts
 from nltk.stem.lancaster import LancasterStemmer
 import nltk
+
+from config import params_setup
+
+import rospkg
+import rospy
+from roboy_communication_cognition.srv import DetectIntent
+
+rospack = rospkg.RosPack()
+sys.path.insert(0, rospack.get_path('roboy_intents_classification'))
+
+from include import skipthoughts
 
 neighbors = 1
 stemmer = LancasterStemmer()
@@ -13,11 +24,13 @@ classes = []
 documents = []
 sentences = []
 ignore_words = ['?', ',', 'roboy', 'Roboy', '\n', '.']
+args = params_setup()
 
+global encoder, encodings, training_data, sentence_sanitized
 
 def read_intents():
     import os
-    intents_path = os.getcwd() + "/intents/";
+    intents_path = args.intents_path#os.getcwd() + "/intents/";
     training_data = []
     for filename in os.listdir(intents_path):
         with open(intents_path + filename) as f:
@@ -56,22 +69,37 @@ def get_nn(encoder, encodings, training_data, sentence):
     return training_data[sorted_ids[i]]["class"], scores[sorted_ids[i]]
 
 
-def init(sentence):
+def init(sentence, args):
     training_data = read_intents()
     sanitize_dataset(training_data)
     for pattern in training_data:
         sentences.append(pattern['sentence'])
-    model = skipthoughts.load_model()
+    model = skipthoughts.load_model(args)
     encoder = skipthoughts.Encoder(model)
     encodings = encoder.encode(sentences)
     sentence_sanitized = sanitize_sentence(sentence)
     intent = get_nn(encoder, encodings, training_data, sentence_sanitized)
     print(intent)
 
+def get_intent(req):
+    sentence_sanitized = sanitize_sentence(req.sentence)
+    response['intent'] = get_nn(encoder, encodings, training_data, sentence_sanitized)
+    return response
 
 def main():
     sentence = "what year were you born"
-    init(sentence)
+    init(sentence, args)
+
+    training_data = read_intents()
+    sanitize_dataset(training_data)
+    for pattern in training_data:
+        sentences.append(pattern['sentence'])
+    model = skipthoughts.load_model(args)
+    encoder = skipthoughts.Encoder(model)
+    encodings = encoder.encode(sentences)
+
+    rospy.init_node('roboy_intents_classification')
+    rospy.Serice('/roboy/cognition/detect_intent', DetectIntent, get_intent)
 
 
 if __name__ == '__main__':

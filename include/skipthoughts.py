@@ -21,18 +21,19 @@ profile = False
 # Specify model and table locations here
 #-----------------------------------------------------------------------------#
 # /Users/xtarx/Documents/TUM/3rd/Roboy/roboy_dialog/IntentGrouping/code/skip-thoughts/code/uni_skip.npz.pkl'
-path_to_models = os.getcwd() + "/models/"
-path_to_tables = os.getcwd() + "/models/"
+# models_path = os.getcwd() + "/models/"
+# path_to_tables = os.getcwd() + "/models/"
 #-----------------------------------------------------------------------------#
 
-path_to_umodel = path_to_models + 'uni_skip.npz'
-path_to_bmodel = path_to_models + 'bi_skip.npz'
 
 
-def load_model():
+
+def load_model(args):
     """
     Load the model with saved tables
     """
+    path_to_umodel = args.models_path + 'uni_skip.npz'
+    path_to_bmodel = args.models_path + 'bi_skip.npz'
     # Load model options
     print 'Loading model parameters...'
     with open('%s.pkl'%path_to_umodel, 'rb') as f:

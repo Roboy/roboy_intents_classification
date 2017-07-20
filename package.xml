@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <name>roboy_intents_classification</name>
+  <version>0.0.1</version>
+  <description>package to identify the intent of the utterance</description>
+
+  <maintainer email="unicorn@roboy.org">Alona Kharchenko</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>rospy</build_depend>
+  <build_depend>roboy_communication_cognition</build_depend>
+  
+  <run_depend>rospy</run_depend>
+  <run_depend>roboy_communication_cognition</run_depend>
+
+</package>
