@@ -15,21 +15,36 @@ This code is written in python. To use it you will need:
 * [gensim](https://radimrehurek.com/gensim/) (for vocabulary expansion when training new models)
 
 ## Getting started
+To download the datasets and install python requirements run:
+```
+./setup.sh
+```
+### ROS usage
+Build the ROS package
+```
+source $ROS_WS/devel/setup.bash
+catkin_make --pkg roboy_intents_classification
+```
+Start the node that offers intent classification service
+```
+roslaunch roboy_intents_classification intents.launch
+```
+Call the ROS service:
+```
+rosservice call /roboy/cognition/detect_intent "sentence: 'how old are you'"
+```
+Example output:
+```
+intent: age_intent
+distance: 0.153419628739
+```
 
-You will first need to download the model files and word embeddings to the model directory. The embedding files (utable and btable) are quite large (>2GB) so make sure there is enough space available. The encoder vocabulary can be found in dictionary.txt. 
-
-    wget http://www.cs.toronto.edu/~rkiros/models/dictionary.txt
-    wget http://www.cs.toronto.edu/~rkiros/models/utable.npy
-    wget http://www.cs.toronto.edu/~rkiros/models/btable.npy
-    wget http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz
-    wget http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz.pkl
-    wget http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz
-    wget http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz.pkl
-
-
-	
-Run intent_classification_ros.py
-
+### No ROS usage
+Run basic command line demo:
+```
+cd scripts
+python detect_intent.py --no-ros __name:='' __log:='' 
+```
 
 ## Logic
 
@@ -66,7 +81,7 @@ Ryan Kiros, Yukun Zhu, Ruslan Salakhutdinov, Richard S. Zemel, Antonio Torralba,
 - [X] Add more neighbour sentences.
 - [X] Add Class for every neighbour sentences.
 - [ ] Evaluate.
-- [ ] Add ROS endpoint.
+- [X] Add ROS endpoint.
 
 ## License
 
