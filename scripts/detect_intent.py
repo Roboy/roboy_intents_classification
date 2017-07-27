@@ -1,4 +1,5 @@
-# import rospy
+#!/usr/bin/python
+
 import sys
 import numpy as np
 import os.path
