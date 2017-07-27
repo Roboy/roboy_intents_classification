@@ -26,7 +26,6 @@ sentences = []
 ignore_words = ['?', ',', 'roboy', 'Roboy', '\n', '.']
 args = params_setup()
 
-global encoder, encodings, training_data, sentence_sanitized
 
 def read_intents():
     import os
@@ -83,13 +82,15 @@ def init(sentence, args):
 
 def get_intent(req):
     sentence_sanitized = sanitize_sentence(req.sentence)
-    response['intent'] = get_nn(encoder, encodings, training_data, sentence_sanitized)
+    response = {}
+    neighbor = get_nn(encoder, encodings, training_data, sentence_sanitized)
+    response['intent'] = neighbor[0]
+    response['distance'] = neighbor[1]
     return response
 
 def main():
-    sentence = "what year were you born"
-    init(sentence, args)
 
+    global encoder, encodings, training_data, sentence_sanitized
     training_data = read_intents()
     sanitize_dataset(training_data)
     for pattern in training_data:
@@ -99,7 +100,9 @@ def main():
     encodings = encoder.encode(sentences)
 
     rospy.init_node('roboy_intents_classification')
-    rospy.Serice('/roboy/cognition/detect_intent', DetectIntent, get_intent)
+    rospy.Service('/roboy/cognition/detect_intent', DetectIntent, get_intent)
+    print "/roboy/cognition/detect_intent is ready"
+    rospy.spin()
 
 
 if __name__ == '__main__':
