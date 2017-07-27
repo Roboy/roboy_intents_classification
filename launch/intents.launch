@@ -1,0 +1,4 @@
+
+<launch>
+   <node name="roboy_intents_classification" pkg="roboy_intents_classification" type="detect_intent.py" respawn="true" output="screen" />
+</launch>
