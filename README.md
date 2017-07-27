@@ -15,24 +15,29 @@ This code is written in python. To use it you will need:
 * [gensim](https://radimrehurek.com/gensim/) (for vocabulary expansion when training new models)
 
 ## Getting started
-To download the datasets and install python requirements run:
+To download the datasets (5.3 GB) and install python requirements run:
 ```
 ./setup.sh
 ```
+For python requirements only:
+```
+pip install -r requirements.txt
+```
+
 ### ROS usage
-Build the ROS package
-```
-source $ROS_WS/devel/setup.bash
-catkin_make --pkg roboy_intents_classification
-```
-Start the node that offers intent classification service
-```
-roslaunch roboy_intents_classification intents.launch
-```
-Call the ROS service:
-```
-rosservice call /roboy/cognition/detect_intent "sentence: 'how old are you'"
-```
+1. Build the ROS package
+	```
+	source $ROS_WS/devel/setup.bash
+	catkin_make --pkg roboy_intents_classification
+	```
+2. Start the node that offers intent classification service
+	```
+	roslaunch roboy_intents_classification intents.launch
+	```
+3. Call the ROS service:
+	```
+	rosservice call /roboy/cognition/detect_intent "sentence: 'how old are you'"
+	```
 Example output:
 ```
 intent: age_intent
