@@ -69,7 +69,7 @@ def get_nn(encoder, encodings, training_data, sentence):
     return training_data[sorted_ids[i]]["class"], scores[sorted_ids[i]]
 
 
-def init(sentence, args):
+def noros(args):
     training_data = read_intents()
     sanitize_dataset(training_data)
     for pattern in training_data:
@@ -77,9 +77,17 @@ def init(sentence, args):
     model = skipthoughts.load_model(args)
     encoder = skipthoughts.Encoder(model)
     encodings = encoder.encode(sentences)
-    sentence_sanitized = sanitize_sentence(sentence)
-    intent = get_nn(encoder, encodings, training_data, sentence_sanitized)
-    print(intent)
+    print 'Enter sentences for intent detection:'
+    try:
+        while True:
+            print '>'
+            sentence = raw_input()
+            sentence_sanitized = sanitize_sentence(sentence)
+            intent = get_nn(encoder, encodings, training_data, sentence_sanitized)
+            print(intent)
+    except KeyboardInterrupt:
+        pass
+        
 
 def get_intent(req):
     sentence_sanitized = sanitize_sentence(req.sentence)
@@ -89,7 +97,7 @@ def get_intent(req):
     response['distance'] = neighbor[1]
     return response
 
-def main():
+def ros():
 
     global encoder, encodings, training_data, sentence_sanitized
     training_data = read_intents()
@@ -107,4 +115,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if args.ros_enabled:
+        ros()
+    else:
+        noros(args)

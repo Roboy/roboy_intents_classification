@@ -10,7 +10,9 @@ def params_setup(cmdline=None):
     parser.add_argument('--intents_path', default=rospack.get_path('roboy_intents_classification') + '/data/intents/', type=str, help='folder containing intents and example utterances')
     parser.add_argument('__name')
     parser.add_argument('__log')
-    
+    parser.add_argument('--no-ros', dest='ros_enabled', action='store_false', help='switch to enable no ROS implementation')
+    parser.set_defaults(ros_enabled=True)
+
     if cmdline:
         args = parser.parse_args(cmdline)
     else:

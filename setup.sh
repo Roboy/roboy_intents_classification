@@ -1,7 +1,3 @@
-source ~/Roboy/devel/setup.bash
-
-roscd roboy_intents_classification
-
 pip install -r requirements.txt
 
 python -m nltk.downloader punkt 
