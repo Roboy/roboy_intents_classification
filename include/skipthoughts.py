@@ -58,7 +58,7 @@ def load_model(args):
 
     # Tables
     print 'Loading tables...'
-    utable, btable = load_tables()
+    utable, btable = load_tables(args)
 
     # Store everything we need in a dictionary
     print 'Packing up...'
@@ -73,14 +73,14 @@ def load_model(args):
     return model
 
 
-def load_tables():
+def load_tables(args):
     """
     Load the tables
     """
     words = []
-    utable = numpy.load(path_to_tables + 'utable.npy')
-    btable = numpy.load(path_to_tables + 'btable.npy')
-    f = open(path_to_tables + 'dictionary.txt', 'rb')
+    utable = numpy.load(args.models_path + 'utable.npy')
+    btable = numpy.load(args.models_path + 'btable.npy')
+    f = open(args.models_path  + 'dictionary.txt', 'rb')
     for line in f:
         words.append(line.decode('utf-8').strip())
     f.close()
