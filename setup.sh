@@ -4,6 +4,8 @@ roscd roboy_intents_classification
 
 pip install -r requirements.txt
 
+python -m nltk.downloader punkt 
+
 if [ ! -d data/models/ ]; then
 	mkdir -p data/models
 	cd data/models
