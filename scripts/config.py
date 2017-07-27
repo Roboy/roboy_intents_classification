@@ -8,7 +8,9 @@ def params_setup(cmdline=None):
     # path ctrl
     parser.add_argument('--models_path', type=str, default=rospack.get_path('roboy_intents_classification') + '/data/models/', help='path to the resources')
     parser.add_argument('--intents_path', default=rospack.get_path('roboy_intents_classification') + '/data/intents/', type=str, help='folder containing intents and example utterances')
-
+    parser.add_argument('__name')
+    parser.add_argument('__log')
+    
     if cmdline:
         args = parser.parse_args(cmdline)
     else:
