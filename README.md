@@ -25,10 +25,11 @@ pip install -r requirements.txt
 ```
 
 ### ROS usage
-0. Get `roboy_communication_cognition` ROS package
+0. Get `roboy_communication_cognition` and `roboy_intents_classification` ROS packages
 	``` 
 	cd $ROS_WS/src
 	git clone https://github.com/Roboy/roboy_communication.git
+	git clone https://github.com/Roboy/roboy_intents_classification.git
 	```
 1. Build required ROS package
 	```
