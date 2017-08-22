@@ -25,9 +25,17 @@ pip install -r requirements.txt
 ```
 
 ### ROS usage
-1. Build the ROS package
+0. Get `roboy_communication_cognition` and `roboy_intents_classification` ROS packages
+	``` 
+	cd $ROS_WS/src
+	git clone https://github.com/Roboy/roboy_communication.git
+	git clone https://github.com/Roboy/roboy_intents_classification.git
 	```
-	source $ROS_WS/devel/setup.bash
+1. Build required ROS package
+	```
+	cd $ROS_WS
+	source devel/setup.bash
+	catkin_make --pkg roboy_communication_cognition
 	catkin_make --pkg roboy_intents_classification
 	```
 2. Start the node that offers intent classification service
